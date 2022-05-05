@@ -66,21 +66,19 @@ public class TreatmentPatientServiceImpl implements TreatmentPatientService {
 
 	@Override
 	public Patient findByPatientId(String patientId) {
-		Patient patient = null;
-		for (Patient temp : list) {
+		for (Patient patient : list) {
 			if (temp.getPatientId().equals(patientId)) {
-				patient = temp;
-				break;
+				return patient;
 			}
 		}
-		return patient;
+		return null;
 	}
 
 	@Override
 	public List<Patient> findByPatientName(String name) {
 		List<Patient> patientlist = new ArrayList<>();
 		for (Patient patient : list) {
-			if (patient.getName().equals(name));
+			if (patient.getName().equals(name)){
 				patientlist.add(patient);
 		}
 		return patientlist;
