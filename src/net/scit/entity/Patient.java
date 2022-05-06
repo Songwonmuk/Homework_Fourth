@@ -1,17 +1,21 @@
 package net.scit.entity;
 
+import java.io.Serializable;
 
-public class Patient { 
-	private String patientId; 		// È¯ÀÚ¹øÈ£ 
-	private String name; 			// ÀÌ¸§
-	private int age; 				// ³ªÀÌ
-	private Department part; 		// Áø·áÄÚµå(Áø·á°ú¸ñ)
-	private int period; 			// ÀÔ¿ø±â°£ 
-	private int expenses; 			// ÁøÂûºñ 
-	private int hospitalBill ; 		// ÀÔ¿øºñ
+public class Patient implements Serializable{ 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String patientId; 		// í™˜ìë²ˆí˜¸ 
+	private String name; 			// ì´ë¦„
+	private int age; 				// ë‚˜ì´
+	private Department part; 		// ì§„ë£Œì½”ë“œ(ì§„ë£Œê³¼ëª©)
+	private int period; 			// ì…ì›ê¸°ê°„ 
+	private int expenses; 			// ì§„ì°°ë¹„ 
+	private int hospitalBill ; 		// ì…ì›ë¹„
 	public Patient() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Patient(String patientId, String name, int age, Department part, int period) {
 		this.patientId = patientId;
@@ -19,20 +23,13 @@ public class Patient {
 		this.age = age;
 		this.part = part;
 		this.period = period;
+		
+		calcExpenses();
+		calcHospitalBill();
 	}
 	
-	public Patient(String patientId, String name, int age, Department part, int period, int expenses, int hospitalBill)
-	{
-		super();
-		this.patientId = patientId;
-		this.name = name;
-		this.age = age;
-		this.part = part;
-		this.period = period;
-		this.expenses = expenses;
-		this.hospitalBill = hospitalBill;
-	}
-	private int calcHospitalBill() {
+	
+	private void calcHospitalBill() {
 		if(period<=3)
 			hospitalBill = period * 30000;
 		else if(period<10)
@@ -47,11 +44,10 @@ public class Patient {
 			hospitalBill = (int) (period * 25000 * 0.72);
 		else
 			hospitalBill = (int) (period * 25000 * 0.68);
-		return hospitalBill;
 	}
 	
 	
-	private int calcExpenses() {
+	private void calcExpenses() {
 		if (age >= 50)
 			this.expenses = 2300;
 		else if (age >= 40)
@@ -64,7 +60,6 @@ public class Patient {
 			this.expenses = 5000;
 		else
 			this.expenses = 7000;
-		return expenses;
 	}
 	
 	
@@ -116,11 +111,11 @@ public class Patient {
 	public int total() {
 		return expenses + hospitalBill;
 	}
-	
+		
 	@Override
 	public String toString() {
-		return String.format("    %s\t  %4s\t  %4s\t  %,4d¿ø\t %2dÀÏ \t %,7d¿ø\t%,7d¿ø", 
-				patientId, name, part.getDescription() , calcExpenses() , period, calcHospitalBill() , total());
+		return String.format("    %s\t %4s\t %4s\t    %,6dì›    %2dì¼   %,7dì›   %,7dì›", 
+				patientId, name, part.getDescription() , expenses , period, hospitalBill , total());
 
 	}
 		
